@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>TodoList</title>
+  <link rel="stylesheet" href="assets/css/font-awesome.css" />
+  <link rel="stylesheet" href="assets/css/bulma.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <a href=".">
+          <h1 class="logo__title title is-3">TodoList</h1>
+        </a>
+      </div>
+      <div class="filters">
+        <div class="filters__task filters__task--completion buttons are-small has-addons">
+          <button class="filters__choice button is-info is-selected">Toutes</button>
+          <button class="filters__choice button">Complètes</button>
+          <button class="filters__choice button">Incomplètes</button>
+        </div>
+        <div class="filters__task filters__task--category select is-small">
+        </div>
+        <div class="filters__task filters__task--archived">
+          <a class="filters__choice" href="#">Voir les archives</a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="tasks">
+        
+      </div>
+      <div class="task task--add">
+        <form method="POST">
+          <div class="task__content">
+            <div class="task__name">
+              <p class="task__name-display"></p>
+              <input class="task__name-edit input" type="text" placeholder="Nom de la tâche" name="name" />
+            </div>
+            <div class="task__category">
+              <div class="select is-small">
+              </div>
+            </div>
+            <div class="task__buttons">
+              <button class="task__button task__button--add button is-info">
+                <span class="icon is-small">
+                  <i class="fa fa-plus"></i>
+                </span>
+                <span>Ajouter</span>
+              </button>
+            </div>
+            <p class="errorMessage">Vous devez choisir une catégorie pour valider le formulaire</p>
+          </div>
+        </form>
+      </div>
+
+      <template id="task-template">
+        <div class="task task--editable task--todo" data-category="">
+          <div class="task__content">
+            <div class="task__name">
+              <p class="task__name-display"></p>
+              <input class="task__name-edit input" type="text" value="" placeholder="Nom de la tâche"
+                name="name" />
+            </div>
+            <div class="task__category">
+              <p></p>
+            </div>
+            <div class="task__buttons">
+              <button class="task__button task__button--incomplete button is-success is-small">
+                <span class="icon is-small">
+                  <i class="fa fa-square-o"></i>
+                </span>
+              </button>
+              <button class="task__button task__button--desarchive button is-success is-small">
+                <span class="icon is-small">
+                  <i class="fa fa-undo"></i>
+                </span>
+              </button>
+              <button class="task__button task__button--validate button is-success is-small">
+                <span class="icon is-small">
+                  <i class="fa fa-check-square-o"></i>
+                </span>
+              </button>
+              <button class="task__button task__button--modify button is-warning is-small">
+                <span class="icon is-small">
+                  <i class="fa fa-pencil-square-o"></i>
+                </span>
+              </button>
+              <button class="task__button task__button--archive button is-danger is-small">
+                <span class="icon is-small">
+                  <i class="fa fa-archive"></i>
+                </span>
+              </button>
+              <button class="task__button task__button--delete button is-danger is-small">
+                <span class="icon is-small">
+                  <i class="fa fa-trash"></i>
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-bar__level" style="width:0%"></div>
+          </div>
+        </div>
+      </template>
+    </main>
+  </div>
+  <script src="assets/js/category.js"></script>
+  <script src="assets/js/task.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+
+</html>

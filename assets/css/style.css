@@ -1,0 +1,235 @@
+.container {
+  padding: 0.5rem;
+}
+
+.header {
+  background-color: #ededed;
+  padding: 1.2rem;
+}
+
+.logo__title {
+  margin-bottom: 0.5rem;
+}
+
+.filters__task--completion.buttons {
+  margin-bottom: 0.5rem;
+}
+
+.filters__task--archived {
+  margin-top: 1rem;
+}
+
+.task {
+  margin: 1.5rem 0 0 0;
+}
+
+.task,
+.task__button.button,
+.task__name-edit {
+  font-size: 0.8rem;
+}
+
+.task__content {
+  padding: 0.5rem;
+  border: solid 1px #ededed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.task__name {
+  font-weight: 400;
+  width: 35%;
+}
+
+.task__name-edit {
+  display: none;
+}
+
+.task__category {
+  color: #b1b1b1;
+}
+
+.task__buttons {
+  margin-left: 1rem;
+}
+
+.progress-bar {
+  height: 0.4rem;
+  background-color: #ededed;
+}
+
+.progress-bar__level {
+  height: 0.4rem;
+  background-color: #3298dc;
+}
+
+.task__button--desarchive,
+.task__button--validate,
+.task__button--delete {
+  display: none;
+}
+
+.task--complete .task__name-display {
+  text-decoration: line-through;
+}
+
+.task--complete .task__button--validate {
+  display: inline-block;
+}
+
+.task--complete .task__button--incomplete {
+  display: none;
+}
+
+.task--edit .task__name-display {
+  display: none;
+}
+
+.task--edit .task__name-edit {
+  display: block;
+  width: 90%;
+}
+
+.task--archive .task__content {
+  background-color: #f7f7f7;
+  border: none;
+}
+
+.task--archive .task__name {
+  color: #b1b1b1;
+}
+
+.task--archive .progress-bar__level {
+  background-color: #b1b1b1;
+}
+
+.task--archive .task__button--validate,
+.task--archive .task__button--modify,
+.task--archive .task__button--archive {
+  display: none;
+}
+
+.task--archive .task__button--desarchive,
+.task--archive .task__button--delete {
+  display: inline-block;
+}
+
+.task--add .task__content {
+  border-color: #78b6df;
+}
+
+.task--add .task__name {
+  width: 100%;
+}
+
+.task--add .task__category {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.task--add .task__name-edit {
+  display: block;
+  width: 90%;
+}
+
+.task--add .task__buttons {
+  margin: 0.5rem 0 0 0;
+}
+
+.task--add .task__button {
+  font-size: 1rem;
+}
+
+.errorMessage {
+  margin-top: 0.5em;
+  color: red;
+  display: none;
+}
+
+.errorMessage.show {
+  display: inline-block;
+}
+
+@media screen and (min-width: 640px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .task,
+  .task__button.button,
+  .task__name-edit {
+    font-size: 0.9rem;
+  }
+
+  .task__content {
+    padding: 1rem;
+  }
+
+  .task__name {
+    font-size: 1rem;
+  }
+
+  .task--add .task__name {
+    width: 50%;
+  }
+
+  .task--add .task__category {
+    margin: 0;
+    width: 30%;
+  }
+
+  .task--add .task__buttons {
+    width: 20%;
+    text-align: right;
+    margin: 0;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo__title {
+    margin-bottom: 0;
+  }
+  
+  
+  .filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .filters__task--completion,
+  .filters__task--category {
+    margin-right: 1rem;
+  }
+  
+  .filters__task--archived {
+    margin-top: 0;
+  }
+
+  .filters__task--completion {
+    margin-bottom: 0;
+    margin-top: 1rem;
+  }
+
+  .task,
+  .task__button.button,
+  .task__name-edit.input {
+    font-size: 1rem;
+  }
+
+  .task__name {
+    width: 50%;
+  }
+
+  .task__name-edit {
+    width: 60%;
+  }
+}
