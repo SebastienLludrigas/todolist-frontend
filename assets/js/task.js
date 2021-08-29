@@ -52,9 +52,13 @@ let task = {
             newTask.querySelector('.task').classList.add('task--complete');
         }
 
-        // Si la tâche est archivée, on ajoute la classe task--archive
+        // if (completion === 100 && app.incomplete) {
+        //     newTask.querySelector('.task').classList.add('hidden-task');
+        // }
+
+        // Si la tâche est archivée, on ajoute la classe task--archive et la classe hidden-task
         if(status == 2){
-            newTask.querySelector('.task').classList.add('task--archive');
+            newTask.querySelector('.task').classList.add('task--archive', 'hidden-task');
         }
 
         // On remplit les différents éléments de notre copie
@@ -73,6 +77,23 @@ let task = {
         // @copyright Audrey
         document.querySelector('.tasks').appendChild(newTask);
     },
+
+    // Méthode permettant de basculer l'affichage entre les tâches archivées et les tâches actives
+    // ainsi que de changer le texte du lien en fonction du type de tâches affichées
+    updateClassTasks: function() {
+        let tasks = document.querySelectorAll('.task');
+
+        if (app.archiveLink.textContent === 'Voir les archives') {
+            app.archiveLink.textContent = 'Voir les tâches actives';
+        } else {
+            app.archiveLink.textContent = 'Voir les archives';
+        }
+
+        tasks.forEach(function(item) {
+            item.classList.toggle('hidden-task');
+        });
+    },
+
     // Méthode permettant d'envoyer une nouvelle tâche à l'API
     sendNewTask: function(taskName, categoryId){
         
@@ -135,8 +156,8 @@ let task = {
         fetch( app.baseURI + 'tasks/' + id, fetchOptions)
         .then(function(response) {
                 return response.json();
-            }
-        ).then(function(newTask){
+        })
+        .then(function(newTask){
 
             // On récupère la balise P qui sert à afficher le nom de la tâche
             let displayName = taskElement.querySelector('.task__name-display');
@@ -185,10 +206,10 @@ let task = {
     },
 
     // Méthode permettant de mettre à jour la completion d'une tâche
-    updateArchive: function(id, archive, taskElement){
+    updateArchive: function(id, status, taskElement){
         // On stocke les données à transférer
         let data = {
-            archive
+            status
         };
         
         // On prépare les entêtes HTTP (headers) de le requête
@@ -211,13 +232,35 @@ let task = {
         // Exécuter la requête HTTP via XHR
         fetch( app.baseURI + 'tasks/' + id, fetchOptions)
         .then(function(response) {
-               return response.json();
-            }
-        ).then(function(task){
-            // La méthode toggle permet d'ajouter une classe si elle n'est pas présente et de la retirer si elle est présente.
-            taskElement.classList.toggle('task--archive');
-        });
+            
+            // On teste si la réponse est un succès
+            if (response.status === 200) { 
+                // Si c'est le cas, on ajoute ou retire la class task--archive de la tâche
+                taskElement.classList.toggle('task--archive');
+                taskElement.classList.toggle('hidden-task');
 
+                // On affiche un dialogue pour informer l'utilisateur
+                if (!taskElement.classList.contains('task--archive')) {
+                    alert('La tâche a bien été désarchivée');
+                } else {
+                    alert('La tâche a bien été archivée');
+                }
+            // Si ce n'est pas le cas on informe également l'utilisateur
+            } else {
+                if (taskElement.classList.contains('task--archive')) {
+                    alert('La désarchivation de la tâche a rencontré un problème, veuillez réessayer');
+                } else {
+                    alert('L\'archivation de la tâche a rencontré un problème, veuillez réessayer');
+                }
+            }
+
+            return response.json(); 
+        })
+        .catch(function(error) {
+            // Si il y a eu une erreur lors d el'exécution de la requête on capture l'erreur et on 
+            // l'affiche dans la console
+            console.log(`Message d\'erreur : ${error.message}`);
+        });
     },
 
         // Méthode permettant de supprimer une tâche

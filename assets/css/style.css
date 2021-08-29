@@ -92,6 +92,10 @@
   width: 90%;
 }
 
+.hidden-task {
+  display: none;
+}
+
 .task--archive .task__content {
   background-color: #f7f7f7;
   border: none;
