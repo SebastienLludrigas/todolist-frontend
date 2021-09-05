@@ -201,6 +201,50 @@ let task = {
         ).then(function(task){
             // La méthode toggle permet d'ajouter une classe si elle n'est pas présente et de la retirer si elle est présente.
             taskElement.classList.toggle('task--complete');
+
+            // On cible la liste des boutons de filtrage
+            let tasks = document.querySelectorAll('.filter-button');
+
+            // On filtre sur tous les boutons de filtrage
+            tasks.forEach(function(item) {
+
+                // // Si le bouton Complètes est sélectionné et que l'on a enlevé la completion 
+                // // de la tâche
+                // if (
+                //     item.classList.contains('complete-tasks') &&
+                //     item.classList.contains('is-selected') &&
+                //     !taskElement.classList.contains('task--complete')
+                // ) {
+                //     // On cache la tâche
+                //     taskElement.classList.add('hidden-task');
+
+                // // Sinon si le bouton Incomplètes est sélectionné et que l'on a complété la tâche
+                // } else if (                    
+                //     item.classList.contains('incomplete-tasks') &&
+                //     item.classList.contains('is-selected') &&
+                //     taskElement.classList.contains('task--complete')
+                // ) {
+                //     // On cache la tâche
+                //     taskElement.classList.add('hidden-task');
+                // }
+                
+                if (
+                    (
+                        item.classList.contains('complete-tasks') &&
+                        item.classList.contains('is-selected') &&
+                        !taskElement.classList.contains('task--complete')
+                    )
+                    ||
+                    (
+                        item.classList.contains('incomplete-tasks') &&
+                        item.classList.contains('is-selected') &&
+                        taskElement.classList.contains('task--complete')
+                    )
+                ) {
+                    // On cache la tâche
+                    taskElement.classList.add('hidden-task');
+                }
+            });
         });
 
     },

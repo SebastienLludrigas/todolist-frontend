@@ -30,6 +30,7 @@ let app = {
     // console.log(event.currentTarget.classList);
     let tasks = document.querySelectorAll('.task');
 
+    // Si on a cliqué sur le bouton Toutes
     if (event.currentTarget.classList.contains("all-tasks")) {
 
       tasks.forEach(function(item) {
@@ -80,7 +81,6 @@ let app = {
   // Méthode venant appliquer les écouteurs d'événements à notre formulaire
   formEvents: function () {
     // On cible notre formulaire
-    // @copyright Cecilia & Chloe
     let form = document.querySelector(".task--add form");
 
     // J'écoute les événements submit sur mon formulaire
