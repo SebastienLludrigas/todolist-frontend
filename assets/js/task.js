@@ -50,15 +50,17 @@ let task = {
         // Si la tâche est terminée, on ajoute la classe task--complete
         if(completion == 100) {
             newTask.querySelector('.task').classList.add('task--complete');
+        } else {
+            newTask.querySelector('.task').classList.add('task--incomplete');
         }
 
         // if (completion === 100 && app.incomplete) {
         //     newTask.querySelector('.task').classList.add('hidden-task');
         // }
 
-        // Si la tâche est archivée, on ajoute la classe task--archive et la classe hidden-task
+        // Si la tâche est archivée, on ajoute la classe task--archive et la classe hidden-archive-task
         if(status == 2){
-            newTask.querySelector('.task').classList.add('task--archive', 'hidden-task');
+            newTask.querySelector('.task').classList.add('task--archive', 'hidden-archive-task');
         }
 
         // On remplit les différents éléments de notre copie
@@ -82,15 +84,18 @@ let task = {
     // ainsi que de changer le texte du lien en fonction du type de tâches affichées
     updateClassTasks: function() {
         let tasks = document.querySelectorAll('.task');
+        const filterTasksButtons = document.querySelector('.filters__task--completion')
 
         if (app.archiveLink.textContent === 'Voir les archives') {
+            filterTasksButtons.classList.add('hidden-filter-buttons');
             app.archiveLink.textContent = 'Voir les tâches actives';
         } else {
+            filterTasksButtons.classList.remove('hidden-filter-buttons');
             app.archiveLink.textContent = 'Voir les archives';
         }
 
         tasks.forEach(function(item) {
-            item.classList.toggle('hidden-task');
+            item.classList.toggle('hidden-archive-task');
         });
     },
 
@@ -199,8 +204,15 @@ let task = {
                return response.json();
             }
         ).then(function(task){
-            // La méthode toggle permet d'ajouter une classe si elle n'est pas présente et de la retirer si elle est présente.
+            // La méthode toggle permet d'ajouter une classe si elle n'est pas présente et de la retirer si elle est présente, ici on enlève ou rajoute la class task--complete.
             taskElement.classList.toggle('task--complete');
+
+            // Si il n'y a pas la class task--complete cela veut dire que la tâche a été décomplété on ajoute donc la class task--incomplete, dans le cas contraire on retire la class task--incomplete
+            if (!taskElement.classList.contains('task--complete')) {
+                taskElement.classList.add('task--incomplete')
+            } else {
+                taskElement.classList.remove('task--incomplete')
+            }
 
             // On cible la liste des boutons de filtrage
             let tasks = document.querySelectorAll('.filter-button');
@@ -208,41 +220,24 @@ let task = {
             // On filtre sur tous les boutons de filtrage
             tasks.forEach(function(item) {
 
-                // // Si le bouton Complètes est sélectionné et que l'on a enlevé la completion 
-                // // de la tâche
-                // if (
-                //     item.classList.contains('complete-tasks') &&
-                //     item.classList.contains('is-selected') &&
-                //     !taskElement.classList.contains('task--complete')
-                // ) {
-                //     // On cache la tâche
-                //     taskElement.classList.add('hidden-task');
-
-                // // Sinon si le bouton Incomplètes est sélectionné et que l'on a complété la tâche
-                // } else if (                    
-                //     item.classList.contains('incomplete-tasks') &&
-                //     item.classList.contains('is-selected') &&
-                //     taskElement.classList.contains('task--complete')
-                // ) {
-                //     // On cache la tâche
-                //     taskElement.classList.add('hidden-task');
-                // }
-                
+                // Si le bouton Complètes est sélectionné et que l'on a enlevé la completion 
+                // de la tâche
                 if (
-                    (
-                        item.classList.contains('complete-tasks') &&
-                        item.classList.contains('is-selected') &&
-                        !taskElement.classList.contains('task--complete')
-                    )
-                    ||
-                    (
-                        item.classList.contains('incomplete-tasks') &&
-                        item.classList.contains('is-selected') &&
-                        taskElement.classList.contains('task--complete')
-                    )
+                    item.classList.contains('complete-tasks') &&
+                    item.classList.contains('is-selected') &&
+                    !taskElement.classList.contains('task--complete')
                 ) {
-                    // On cache la tâche
-                    taskElement.classList.add('hidden-task');
+                    // On cache la tâche incomplète
+                    taskElement.classList.add('hidden-incomplete-task');
+
+                // Sinon si le bouton Incomplètes est sélectionné et que l'on a complété la tâche
+                } else if (                    
+                    item.classList.contains('incomplete-tasks') &&
+                    item.classList.contains('is-selected') &&
+                    taskElement.classList.contains('task--complete')
+                ) {
+                    // On cache la tâche complète
+                    taskElement.classList.add('hidden-complete-task');
                 }
             });
         });
@@ -281,7 +276,7 @@ let task = {
             if (response.status === 200) { 
                 // Si c'est le cas, on ajoute ou retire la class task--archive de la tâche
                 taskElement.classList.toggle('task--archive');
-                taskElement.classList.toggle('hidden-task');
+                taskElement.classList.toggle('hidden-archive-task');
 
                 // On affiche un dialogue pour informer l'utilisateur
                 if (!taskElement.classList.contains('task--archive')) {

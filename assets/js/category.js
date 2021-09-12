@@ -25,6 +25,32 @@ let category = {
         })
         .then(task.loadTasks);
     },
+
+    handleCategorySelected: function(event) {
+
+        const tasks = document.querySelectorAll(".task--todo");
+        // task.classList.remove('hidden-category-task');
+
+        // On récupère le label de l'option sélectionnée
+        const selectedOptionLabel = event.target.options[event.target.options.selectedIndex].label;
+        console.log(selectedOptionLabel);
+
+        tasks.forEach(task => {
+
+            task.classList.remove('hidden-category-task');
+
+            console.log(task.dataset.category);
+
+            if (
+                selectedOptionLabel !== 'Toutes les catégories' &&
+                selectedOptionLabel !== task.dataset.category
+            ) {
+                task.classList.add('hidden-category-task');
+            }
+
+        });
+    },
+
     createCategoriesSelect: function(categories) {
         // Je récupère l'ensemble des containers qui vont accueillir mes select de catégories
         let selectContainers = document.querySelectorAll('.select');
@@ -37,14 +63,15 @@ let category = {
             let select = document.createElement('select');
 
             // Si on est sur le premier select, on ajoute la classe filters__choice
-            if( i == 0){
+            if(i == 0){
                 select.classList.add('filters__choice');
+
+                select.addEventListener('change', category.handleCategorySelected);
             }
 
             // Création de l'option par défaut
             let defaultOption = document.createElement('option');
-            // Ajout de l'attribut disabled pour désactiver la possibilité de sélectioner cette option
-            defaultOption.setAttribute('disabled', "");
+            
             defaultOption.setAttribute('selected', "");
             defaultOption.setAttribute('value', 0);
             // On donne un texte différent à l'option par défaut selon si elle est dans le header ou pas.
@@ -52,6 +79,8 @@ let category = {
                 defaultOption.textContent = 'Toutes les catégories';
             } else {
                 defaultOption.textContent = 'Choisir une catégorie';
+                // Ajout de l'attribut disabled pour désactiver la possibilité de sélectioner cette option
+                defaultOption.setAttribute('disabled', "");
             }
 
             // On ajoute l'option par défaut au select
@@ -63,6 +92,7 @@ let category = {
 
                 // On crée une option par catégorie
                 let option = document.createElement('option');
+                // option.addEventListener('click', category.handleCategorySelected)
                 option.textContent = currentCategory.name;
                 option.setAttribute('value', currentCategory.id);
 
@@ -80,9 +110,12 @@ let category = {
     setCategories: function(categories) {
         for (i = 0; i < categories.length; i++){
             let currentCategory = categories[i];
-            // On ajoute une entrée dans category.categories avec un clé l'id et le nom en valeur
+            // On ajoute une entrée dans category.categories avec l'id de la catégorie comme clé et le nom 
+            // de la catégorie comme valeur
             category.categories[currentCategory.id] = currentCategory.name;
         }
+
+        console.log(category.categories);
         
     }
 }

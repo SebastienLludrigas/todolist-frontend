@@ -34,9 +34,10 @@ let app = {
     if (event.currentTarget.classList.contains("all-tasks")) {
 
       tasks.forEach(function(item) {
-        if (!item.classList.contains('task--archive')) {
-          item.classList.remove('hidden-task');
-        }
+
+        item.classList.remove('hidden-incomplete-task');
+        item.classList.remove('hidden-complete-task');
+      
       });
 
       app.completeTasks.classList.remove("is-selected", "is-info");
@@ -46,12 +47,11 @@ let app = {
     } else if (event.currentTarget.classList.contains("complete-tasks")) {
 
       tasks.forEach(function(item) {
-        if (!item.classList.contains('task--archive')) {
-          item.classList.remove('hidden-task');
-        }
         
-        if (!item.classList.contains('task--complete')) {
-          item.classList.add('hidden-task');
+        item.classList.remove('hidden-complete-task');
+
+        if (item.classList.contains('task--incomplete')) {
+          item.classList.add('hidden-incomplete-task');
         }
       });
 
@@ -62,12 +62,11 @@ let app = {
     } else {
 
       tasks.forEach(function(item) {
-        if (!item.classList.contains('task--archive')) {
-          item.classList.remove('hidden-task');
-        }
-
+        
+        item.classList.remove('hidden-incomplete-task');
+        
         if (item.classList.contains('task--complete')) {
-          item.classList.add('hidden-task');
+          item.classList.add('hidden-complete-task');
         }
       });
 

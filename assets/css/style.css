@@ -92,10 +92,6 @@
   width: 90%;
 }
 
-.hidden-task {
-  display: none;
-}
-
 .task--archive .task__content {
   background-color: #f7f7f7;
   border: none;
@@ -111,7 +107,13 @@
 
 .task--archive .task__button--validate,
 .task--archive .task__button--modify,
-.task--archive .task__button--archive {
+.task--archive .task__button--archive,
+.task--incomplete .task__button--archive,
+.hidden-archive-task,
+.hidden-complete-task,
+.hidden-incomplete-task,
+.hidden-category-task,
+.hidden-filter-buttons {
   display: none;
 }
 
